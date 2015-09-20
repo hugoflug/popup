@@ -9,14 +9,17 @@ class DSNode:
 nodes = [None]*1000000
 
 def create(val):
-    nodes[val] = DSNode(None, val)
+    newnode = DSNode(None, val)
+    newnode.parent = newnode
+    nodes[val] = newnode
+
+def findnode(xnode):
+    if xnode.parent != xnode:
+        xnode.parent = findnode(xnode.parent)
+    return xnode.parent
 
 def find(x):
-    xnode = nodes[x]
-
-    while xnode.parent:
-        xnode = xnode.parent
-    return xnode
+    return findnode(nodes[x])
 
 def same(x, y):
     if x == y:
