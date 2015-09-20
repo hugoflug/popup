@@ -21,6 +21,8 @@ def find(x):
     return xnode
 
 def same(x, y):
+    if x == y:
+        return True
     if x not in nodes or y not in nodes:
         return False
     return find(nodes[x].value).value == find(nodes[y].value).value
