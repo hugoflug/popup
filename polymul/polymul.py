@@ -18,7 +18,7 @@ procedure karatsuba(num1, num2)
 """
 
 def quadmul(pol1, pol2):
-    result = [0]*(len(pol1)*len(pol2))
+    result = [0]*(len(pol1)+len(pol2))
     for index1, coeff1 in enumerate(pol1):
         for index2, coeff2 in enumerate(pol2):
             result[index1+index2] += coeff1*coeff2
@@ -40,8 +40,7 @@ def karatsuba(pol1, pol2):
     return (z2*10**(2*m2)) + ((z1-z2-z0)*10**(m2))+(z0)
 
 T = int(sys.stdin.readline().strip("\n"))
-
-for _ in range(T/2):
+for _ in range(T):
     deg1 = int(sys.stdin.readline().strip("\n"))
     pol1 = [int(x) for x in sys.stdin.readline().strip("\n").split(" ")]
     deg2 = int(sys.stdin.readline().strip("\n"))
@@ -55,4 +54,4 @@ for _ in range(T/2):
             deg = index
 
     print deg
-    print " ".join([str(x) for x in res])
+    print " ".join([str(x) for x in res[:deg+1]])
