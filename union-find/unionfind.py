@@ -1,17 +1,15 @@
 import sys
 
 class DSNode:
-    def __init__(self, parent, value):
-        self.parent = parent
+    def __init__(self, value):
+        self.parent = self
         self.value = value
         self.height = 1
 
 nodes = [None]*1000000
 
 def create(val):
-    newnode = DSNode(None, val)
-    newnode.parent = newnode
-    nodes[val] = newnode
+    nodes[val] = DSNode(val)
 
 def findnode(xnode):
     if xnode.parent != xnode:
@@ -25,8 +23,8 @@ def same(x, y):
     if x == y:
         return True
     if not nodes[x] or not nodes[y]:
-        return False
-    return find(nodes[x].value).value == find(nodes[y].value).value
+       return False
+    return find(x).value == find(y).value
 
 def union(x, y):
     if not nodes[x]:
@@ -56,7 +54,6 @@ for _ in range(Q):
     set2 = int(set2)
     
     if op == "?":
-        print "yes" if same(set1, set2) else "no"
-        
-    if op == "=":
+        print "yes" if same(set1, set2) else "no"  
+    elif op == "=":
         union(set1, set2)
