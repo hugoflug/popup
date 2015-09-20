@@ -23,7 +23,6 @@ public class UnionFinder {
     }
 
     public DSNode find(DSNode node) {
-
         if (node.parent != node) {
             node.parent = find(node.parent);
         }
@@ -46,6 +45,7 @@ public class UnionFinder {
         if (nodes[a] == null) {
             create(a);
         }
+
         if (nodes[b] == null) {
             create(b);
         }
