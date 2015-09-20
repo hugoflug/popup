@@ -1,22 +1,9 @@
 public class UnionFinder {
-
-    private static class DSNode {
-        public DSNode parent;
-        public int value;
-        public int height;
-
-        public DSNode(int value) {
-            this.value = value;
-            this.parent = this;
-            this.height = 1;
-        }
-    }
-
     private int[] parents;
     private int[] heights;
 
     public UnionFinder(int howManyNodes) {
-        parents = new int[howManyNodes]; /* TODO: fill with 0...howManyNodes */
+        parents = new int[howManyNodes];
 
         for (int i = 0; i < howManyNodes; i++) {
             parents[i] = i;
@@ -37,7 +24,6 @@ public class UnionFinder {
     }
 
     public void union(int a, int b) {
-
         int aRoot = find(a);
         int bRoot = find(b);
 
@@ -63,7 +49,7 @@ public class UnionFinder {
 
         UnionFinder unionFinder = new UnionFinder(N);
 
-        for (int i = 0; i < Q; i++) {
+        while (io.hasMoreTokens()) {
             String op = io.getWord();
             int val1 = io.getInt();
             int val2 = io.getInt();
