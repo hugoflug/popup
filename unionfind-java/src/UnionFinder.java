@@ -12,58 +12,46 @@ public class UnionFinder {
         }
     }
 
-    private DSNode[] nodes;
+    private int[] parents;
+    private int[] heights;
 
     public UnionFinder(int howManyNodes) {
-        nodes = new DSNode[howManyNodes];
-    }
+        parents = new int[howManyNodes]; /* TODO: fill with 0...howManyNodes */
 
-    public void create(int val) {
-        nodes[val] = new DSNode(val);
-    }
-
-    public DSNode find(DSNode node) {
-        if (node.parent != node) {
-            node.parent = find(node.parent);
+        for (int i = 0; i < howManyNodes; i++) {
+            parents[i] = i;
         }
-        return node.parent;
+
+        heights = new int[howManyNodes];
+    }
+
+    public int find(int val) {
+        if (parents[val] != val) {
+            parents[val] = find(parents[val]);
+        }
+        return parents[val];
     }
 
     public boolean same(int a, int b) {
-        if (a == b) {
-            return true;
-        }
-
-        if (nodes[a] == null || nodes[b] == null) {
-            return false;
-        }
-
-        return find(nodes[a]).value == find(nodes[b]).value;
+        return find(a) == find(b);
     }
 
     public void union(int a, int b) {
-        if (nodes[a] == null) {
-            create(a);
-        }
 
-        if (nodes[b] == null) {
-            create(b);
-        }
+        int aRoot = find(a);
+        int bRoot = find(b);
 
-        DSNode aRoot = find(nodes[a]);
-        DSNode bRoot = find(nodes[b]);
-
-        if (aRoot.value == bRoot.value) {
+        if (aRoot == bRoot) {
             return;
         }
 
-        if (aRoot.height < bRoot.height) {
-            aRoot.parent = bRoot;
-        } else if (bRoot.height < aRoot.height) {
-            bRoot.parent = aRoot;
+        if (heights[aRoot] < heights[bRoot]) {
+            parents[aRoot] = bRoot;
+        } else if (heights[bRoot] < heights[aRoot]) {
+            parents[bRoot] = aRoot;
         } else {
-            bRoot.parent = aRoot;
-            aRoot.height += 1;
+            parents[bRoot] = aRoot;
+            heights[aRoot] += 1;
         }
 
     }
