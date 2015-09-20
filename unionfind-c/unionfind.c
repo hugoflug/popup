@@ -49,8 +49,7 @@ int main() {
     }
 
     for (j = 0; j < Q; j++) {
-        scanf("%c %d %d", &op, &val1, &val2);
-        scanf("%c %d %d", &op, &val1, &val2);
+        scanf(" %c %d %d", &op, &val1, &val2);
 
         if (op == '?') {
             if (same(val1, val2)) {
