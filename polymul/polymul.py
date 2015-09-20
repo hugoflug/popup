@@ -16,7 +16,11 @@ procedure karatsuba(num1, num2)
 """
 
 def quadmul(pol1, pol2):
-	pass
+	result = [0]*(len(pol1)*len(pol2))
+	for index1, coeff1 in enumerate(pol1):
+		for index2, coeff2 in enumerate(pol2):
+			result[index1+index2] += coeff1*coeff2
+	return result
 
 def karatsuba(pol1, pol2):
 	if len(pol1) < 10 or len(pol2) < 10:

@@ -15,7 +15,7 @@ int main() {
         int c = (int)floor(cd);
         
         int i;
-        for (i = 0; i < n; i++) {
+        for (i = 1; i <= n; i++) {
             scanf("%d %d", &value[i], &weight[i]);
         }
 
@@ -66,7 +66,7 @@ int main() {
 
         printf("%d\n", chosen_n);
         for (i = 0; i < chosen_n; i++) {
-            printf("%d ", chosen[i]);
+            printf("%d ", chosen[i]-1);
         }
         printf("\n");
     }
