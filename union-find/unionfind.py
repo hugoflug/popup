@@ -6,8 +6,6 @@ class DSNode:
         self.value = value
         self.height = 1
 
-nodes = [None]*1000000
-
 def create(val):
     nodes[val] = DSNode(val)
 
@@ -47,6 +45,8 @@ def union(x, y):
         y_rep.height += 1
 
 N, Q = [int(x) for x in sys.stdin.readline().split(" ")]
+
+nodes = [None]*N
 
 for _ in range(Q):
     op, set1, set2 = sys.stdin.readline().strip("\n").split(" ")
