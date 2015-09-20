@@ -6,7 +6,7 @@ class DSNode:
         self.value = value
         self.height = 1
 
-nodes = {}
+nodes = [None]*1000000
 
 def create(val):
     nodes[val] = DSNode(None, val)
@@ -21,14 +21,14 @@ def find(x):
 def same(x, y):
     if x == y:
         return True
-    if x not in nodes or y not in nodes:
+    if not nodes[x] or not nodes[y]:
         return False
     return find(nodes[x].value).value == find(nodes[y].value).value
 
 def union(x, y):
-    if x not in nodes:
+    if not nodes[x]:
         create(x)
-    if y not in nodes:
+    if not nodes[y]:
         create(y)
 
     x_rep = find(x)
@@ -49,6 +49,8 @@ N, Q = [int(x) for x in sys.stdin.readline().split(" ")]
 
 for _ in range(Q):
     op, set1, set2 = sys.stdin.readline().strip("\n").split(" ")
+    set1 = int(set1)
+    set2 = int(set2)
     
     if op == "?":
         print "yes" if same(set1, set2) else "no"
