@@ -1,12 +1,12 @@
 #include <stdio.h>
 #include <math.h>
 
-int backpointers[2001][2001];
-int chosen_object[2001][2001];
-int m[2001][2001];
-
 int knapsack(int *weights, int *values, int c, int n, int *chosen) {
     int j;
+
+    int backpointers[n][c];
+    int chosen_object[n][c];
+    int m[n][c];
 
     int w ;
     for (w = 0; w <= c; w++) {
