@@ -1,17 +1,14 @@
+/* Authors: Hugo Sandelius and Fabian Maximilian */
+
 #include <cstdio>
 
-
-/*
-    A datatype representing a set of disjoint sets with efficient operations
-*/
+/* A datatype representing a set of disjoint sets with efficient operations */
 class DisjointSet {
 private:
     int *parents;
     int *heights;
 public:
-    /*
-        Create a set of 'n' disjoint sets
-    */
+    /* Create a set of 'n' disjoint sets */
     DisjointSet(int n) {
         parents = new int[n];
         heights = new int[n];
@@ -25,9 +22,7 @@ public:
         }
     }
 
-    /*
-        Find the representative for the set containing 'val'
-    */
+    /* Find the representative for the set containing 'val' */
     int find(int val) {
         if (parents[val] != val) {
             parents[val] = find(parents[val]);
@@ -35,16 +30,12 @@ public:
         return parents[val];
     }
 
-    /*
-        Returns true if a and b are in the same set, false otherwise
-    */
+    /* Returns true if a and b are in the same set, false otherwise */
     int same(int a, int b) {
         return find(a) == find(b);
     }
 
-    /*
-        Unions the set containing a with the set containing b
-    */
+    /* Unions the set containing a with the set containing b */
     void unionize(int a, int b) {
         int aroot = find(a);
         int broot = find(b);

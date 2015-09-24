@@ -1,19 +1,21 @@
+/* Authors: Hugo Sandelius and Fabian Maximilian */
+
 #include <stdio.h>
 #include <math.h>
 
 /*
-    solve the knapsack problem with 'n' objects for a knapsack
+    Solve the knapsack problem with 'n' objects for a knapsack
     with capacity 'c'.
-    weights and values of all objects are passed in the 'weights' and
-    'values' arrays. The chosen object are put in the 'chosen' array.
+    Weights and values of the objects are passed in the 'weights' and
+    'values' arrays. The chosen objects are put in the 'chosen' array.
     Return value is the length of 'chosen'.
 */
 int knapsack(int *weights, int *values, int c, int n, int *chosen) {
     int j;
 
-    int backpointers[n][c];
-    int chosen_object[n][c];
-    int m[n][c];
+    int backpointers[n+1][c+1];
+    int chosen_object[n+1][c+1];
+    int m[n+1][c+1];
 
     int w ;
     for (w = 0; w <= c; w++) {
