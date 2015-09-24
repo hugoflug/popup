@@ -1,3 +1,5 @@
+/* Authors: Hugo Sandelius and Fabian Maximilian */
+
 public class Interval {
 
     public double a; // I know this is bad style!

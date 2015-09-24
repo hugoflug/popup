@@ -1,3 +1,5 @@
+/* Authors: Hugo Sandelius and Fabian Maximilian */
+
 public class Fenwick {
 
     private long[] tree;
