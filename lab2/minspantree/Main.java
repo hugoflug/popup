@@ -69,6 +69,14 @@ public class Main {
             if (edges.isEmpty()) {
                 io.println("Impossible");
             } else {
+                for (Edge e: edges) {
+                    if (e.target.index < e.source.index) {
+                        int swap = e.target.index;
+                        e.target.index = e.source.index;
+                        e.source.index = swap;
+                    }
+                }
+
                 // lexicographic sort
                 Collections.sort(edges, new Comparator<Edge>() {
                     @Override
