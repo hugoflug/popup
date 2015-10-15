@@ -1,18 +1,19 @@
-import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Collections;
 import java.util.Vector;
 
 /**
- * Created by fabianschilling on 10/7/15.
+ * Author: Fabian Schilling
  */
+
 public class Main {
 
-    static IO io = new IO(System.in, System.out);
-    //static IO io = new IO("/Users/fabianschilling/Downloads/shortestpath1-sample-data/shortestpath1.in");
-    //static IO io = new IO("/Users/fabianschilling/Downloads/shortestpath2-sample-data/shortestpath2.in");
-    //static IO io = new IO("/Users/fabianschilling/Downloads/shortestpath3-sample-data/shortestpath3.in");
-    //static IO io = new IO("/Users/fabianschilling/Downloads/minspantree-sample-data/minspantree-test.in");
-    //static IO io = new IO("/Users/fabianschilling/Downloads/allpairspath-sample-data/allpairspath.in");
+    public static IO io = new IO(System.in, System.out);
+    //public static IO io = new IO("/Users/fabianschilling/Downloads/shortestpath1-sample-data/shortestpath1.in");
+    //public static IO io = new IO("/Users/fabianschilling/Downloads/shortestpath2-sample-data/shortestpath2.in");
+    //public static IO io = new IO("/Users/fabianschilling/Downloads/shortestpath3-sample-data/shortestpath3.in");
+    //public static IO io = new IO("/Users/fabianschilling/Downloads/minspantree-sample-data/minspantree.in");
+    //public static IO io = new IO("/Users/fabianschilling/Downloads/allpairspath-sample-data/allpairspath.in");
 
     public static void shortestpath1() {
 
@@ -39,7 +40,7 @@ public class Main {
 
             }
 
-            nodes[s].dijkstra();
+            Library.dijkstra(nodes[s]);
 
             for (int i = 0; i < q; i++) {
                 int query = io.getInt();
@@ -85,7 +86,7 @@ public class Main {
 
             }
 
-            nodes[s].dijkstraTimetable();
+            Library.dijkstraTimetable(nodes[s]);
 
             for (int i = 0; i < q; i++) {
                 int query = io.getInt();
@@ -102,6 +103,7 @@ public class Main {
 
             io.println();
         }
+
     }
 
     public static void shortestpath3() {
@@ -129,11 +131,9 @@ public class Main {
 
                 edges[i] = new Edge(nodes[u], nodes[v], w);
 
-                //nodes[u].adjacencies.add(new Edge(nodes[v], w));
-
             }
 
-            nodes[s].bellmanFord(nodes, edges);
+            Library.bellmanFord(nodes, edges, nodes[s]);
 
             for (int i = 0; i < q; i++) {
                 int query = io.getInt();
@@ -162,16 +162,6 @@ public class Main {
             if (n == 0) break;
             int m = io.getInt(); // number of edges
 
-            if (m == 0) { // no edges
-                io.println("Impossible");
-                continue;
-            }
-
-            if (m < n - 1) { // not enough edges
-                io.println("Impossible");
-                continue;
-            }
-
             Node[] nodes = new Node[n];
 
             for (int i = 0; i < n; i++) {
@@ -183,40 +173,59 @@ public class Main {
                 int v = io.getInt();
                 int w = io.getInt();
 
-                nodes[u].adjacencies.add(new Edge(nodes[v], w));
-                nodes[v].adjacencies.add(new Edge(nodes[u], w)); // undirected
+                if (u != v) {
+                    nodes[u].adjacencies.add(new Edge(nodes[v], w));
+                    nodes[v].adjacencies.add(new Edge(nodes[u], w)); // undirected
+                }
             }
 
-            nodes[0].prim(nodes);
+            Library.prim(nodes);
 
             Vector<Edge> edges = new Vector<>();
-            int total = 0;
+            long total = 0;
 
             for (Node node: nodes) {
                 if (node.previous != null) {
                     total += node.distance;
-                    edges.add(new Edge(node.previous, node, node.distance));
+                    if (node.previous.index < node.index) {
+                        edges.add(new Edge(node.previous, node, node.distance));
+                    } else {
+                        edges.add(new Edge(node, node.previous, node.distance));
+                    }
                 }
             }
-            if (edges.isEmpty() || (edges.size() != n - 1)) {
+
+            if (edges.isEmpty() || edges.size() != n - 1) {
                 io.println("Impossible");
             } else {
-                Collections.sort(edges);
+
+                // lexicographic sort
+                Collections.sort(edges, new Comparator<Edge>() {
+                    @Override
+                    public int compare(Edge o1, Edge o2) {
+                        if (o1.source.index != o2.source.index) {
+                            return Integer.compare(o1.source.index, o2.source.index);
+                        } else {
+                            return Integer.compare(o1.target.index, o2.target.index);
+                        }
+                    }
+                });
                 io.println(total);
                 for (Edge e: edges) {
                     io.println(e.source.index + " " + e.target.index);
                 }
             }
         }
+
     }
 
     public static void allpairspath() {
 
         while (io.hasMoreTokens()) {
-            int n = io.getInt();
+            int n = io.getInt(); // 1 <= n <= 150 number of nodes
             if (n == 0) break;
-            int m = io.getInt();
-            int q = io.getInt();
+            int m = io.getInt(); // 0 <= m <= 5000 number of edges
+            int q = io.getInt(); // 0 <= q <= 1000 number of queries
 
             int[][] G = new int[n][n];
 
@@ -227,65 +236,31 @@ public class Main {
             }
 
             for (int i = 0; i < m; i++) {
-                int u = io.getInt();
-                int v = io.getInt();
-                int w = io.getInt();
-                G[u][v] = w;
+                int u = io.getInt(); // edge from node u...
+                int v = io.getInt(); // ... to node v with...
+                int w = io.getInt(); // ... weight -1000 <= w <= 1000
+                if (G[u][v] > w) {
+                    G[u][v] = w; // double edges, take lowest one!
+                }
+
             }
 
-            int[][] dist = floydWarshall(G);
+            Library.floydWarshall(G);
 
             for (int i = 0; i < q; i++) {
                 int u = io.getInt();
                 int v = io.getInt();
-                if (dist[u][v] == Integer.MAX_VALUE) {
+                if (G[u][v] == Integer.MAX_VALUE) {
                     io.println("Impossible");
-                } else if (dist[u][v] == Integer.MIN_VALUE) {
+                } else if (G[u][v] == Integer.MIN_VALUE) {
                     io.println("-Infinity");
                 } else {
-                    io.println(dist[u][v]);
+                    io.println(G[u][v]);
                 }
             }
 
-            io.println();
+            io.println(); // print blank line after each test case
         }
-    }
-
-    public static int[][] floydWarshall(int[][] G) {
-
-        int[][] dist = new int[G.length][G.length];
-
-        for (int i = 0; i < dist.length; i++) {
-            for (int j = 0; j < dist.length; j++) {
-                if (i == j) dist[i][j] = 0;
-                else dist[i][j] = Integer.MAX_VALUE;
-                if (dist[i][j] > G[i][j]) dist[i][j] = G[i][j];
-            }
-        }
-
-        for (int k = 0; k < dist.length; k++) {
-            for (int i = 0; i < dist.length; i++) {
-                for (int j = 0; j < dist.length; j++) {
-
-                    if (dist[i][k] == Integer.MAX_VALUE || dist[k][j] == Integer.MAX_VALUE) {
-                        continue;
-                    }
-
-                    if (dist[i][k] == Integer.MIN_VALUE || dist[k][j] == Integer.MIN_VALUE) {
-                        dist[i][j] = Integer.MIN_VALUE;
-                    }
-
-                    if (dist[i][j] > dist[i][k] + dist[k][j]) {
-                        dist[i][j] = dist[i][k] + dist[k][j];
-                    }
-
-                    if (i == j && dist[i][j] < 0) {
-                        dist[i][j] = Integer.MIN_VALUE;
-                    }
-                }
-            }
-        }
-        return dist;
     }
 
     public static void main(String[] args) {
@@ -295,7 +270,6 @@ public class Main {
         //shortestpath3();
         //minspantree();
         //allpairspath();
-
         io.close();
     }
 }
