@@ -2,6 +2,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
+/* Authors: Hugo Sandelius and Fabian Maximilian */
+
 public class IntervalCover {
 
 

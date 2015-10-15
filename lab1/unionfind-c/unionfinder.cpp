@@ -1,6 +1,7 @@
 #include "unionfind.h"
 #include <cstdio>
 
+/* Authors: Hugo Sandelius and Fabian Maximilian */
 
 int main() {
     int n, q;
