@@ -1,3 +1,7 @@
+/**
+ * Author: Fabian Schilling & Hugo Sandelius
+ */
+
 import java.util.Vector;
 
 public class Node {
@@ -19,5 +23,4 @@ public class Node {
         this.previous = null;
         this.visited = false;
     }
-
 }

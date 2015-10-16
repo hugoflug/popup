@@ -1,5 +1,8 @@
-import java.util.Comparator;
-import java.util.PriorityQueue;
+/**
+ * Author: Fabian Schilling & Hugo Sandelius
+ */
+
+import java.util.*;
 
 public class Library {
 
@@ -7,12 +10,7 @@ public class Library {
     public static void dijkstra(Node start) {
         start.distance = 0;
 
-        Comparator<Node> comp = new Comparator<Node>() {
-            @Override
-            public int compare(Node o1, Node o2) {
-                return Integer.compare(o1.distance, o2.distance);
-            }
-        };
+        Comparator<Node> comp = (o1, o2) -> Integer.compare(o1.distance, o2.distance);
         PriorityQueue<Node> queue = new PriorityQueue<>(comp);
         queue.add(start);
 
@@ -43,12 +41,7 @@ public class Library {
 
         start.distance = 0;
 
-        Comparator<Node> comp = new Comparator<Node>() {
-            @Override
-            public int compare(Node o1, Node o2) {
-                return Integer.compare(o1.distance, o2.distance);
-            }
-        };
+        Comparator<Node> comp = (o1, o2) -> Integer.compare(o1.distance, o2.distance);
         PriorityQueue<Node> queue = new PriorityQueue<>(comp);
         queue.add(start);
 
@@ -85,7 +78,7 @@ public class Library {
 
         start.distance = 0;
 
-        for (int i = 0; i < nodes.length; i++) {
+        for (Node node: nodes) {
             for (Edge e: edges) {
                 if (e.source.distance != Integer.MAX_VALUE && e.source.distance + e.weight < e.target.distance) {
                     e.target.distance = e.source.distance + e.weight;
@@ -94,7 +87,7 @@ public class Library {
             }
         }
 
-        for (int i = 0; i < nodes.length; i++) {
+        for (Node node: nodes) {
             for (Edge e: edges) {
                 if (e.source.distance == Integer.MIN_VALUE) {
                     e.target.distance = Integer.MIN_VALUE;
@@ -105,16 +98,34 @@ public class Library {
         }
     }
 
+    // construct path
+    public static Vector<Node> constructPathTo(Node end) {
+        Vector<Node> path = new Vector<>();
+        Node prev = end;
+        while (prev != null) {
+            path.insertElementAt(prev, 0);
+            prev = prev.previous;
+        }
+        return path;
+    }
+
+    public static void printPathTo(Node end) {
+        Vector<Node> path = constructPathTo(end);
+        System.err.print("Path: ");
+        for (Node node: path) {
+            System.err.print(node.index + " ");
+        }
+        System.err.println();
+    }
+
     // minspantree
     public static void prim(Node[] nodes) {
 
-        Comparator<Node> comp = new Comparator<Node>() {
-            @Override
-            public int compare(Node o1, Node o2) {
-                return Integer.compare(o1.distance, o2.distance);
-            }
-        };
+        // Order nodes by distance
+        Comparator<Node> comp = (o1, o2) -> Integer.compare(o1.distance, o2.distance);
         PriorityQueue<Node> queue = new PriorityQueue<>(comp);
+
+        // Add all nodes to queue
         for (Node node: nodes) {
             queue.add(node);
         }
@@ -141,35 +152,35 @@ public class Library {
     }
 
     // allpairspath
-    public static void floydWarshall(int[][] G) {
+    public static void floydWarshall(int[][] dist) {
 
         // Initialize self-connections as 0
-        for (int i = 0; i < G.length; i++) {
-            G[i][i] = 0;
+        for (int i = 0; i < dist.length; i++) {
+            dist[i][i] = 0;
         }
 
         // Run Floyd-Warshall
-        for (int k = 0; k < G.length; k++) {
-            for (int i = 0; i < G.length; i++) {
-                for (int j = 0; j < G.length; j++) {
+        for (int k = 0; k < dist.length; k++) {
+            for (int i = 0; i < dist.length; i++) {
+                for (int j = 0; j < dist.length; j++) {
 
-                    if (G[i][k] == Integer.MAX_VALUE || G[k][j] == Integer.MAX_VALUE) {
+                    if (dist[i][k] == Integer.MAX_VALUE || dist[k][j] == Integer.MAX_VALUE) {
                         continue; // dont even have to look at this
                     }
 
-                    if (G[i][j] > G[i][k] + G[k][j]) {
-                        G[i][j] = G[i][k] + G[k][j];
+                    if (dist[i][j] > dist[i][k] + dist[k][j]) {
+                        dist[i][j] = dist[i][k] + dist[k][j];
                     }
                 }
             }
         }
 
         // Detect negative cycles
-        for (int i = 0; i < G.length; i++) {
-            for (int j = 0; j < G.length; j++) {
-                for (int k = 0; G[i][j] != Integer.MIN_VALUE && k < G.length; k++) {
-                    if (G[i][k] != Integer.MAX_VALUE && G[k][j] != Integer.MAX_VALUE && G[k][k] < 0) {
-                        G[i][j] = Integer.MIN_VALUE;
+        for (int i = 0; i < dist.length; i++) {
+            for (int j = 0; j < dist.length; j++) {
+                for (int k = 0; dist[i][j] != Integer.MIN_VALUE && k < dist.length; k++) {
+                    if (dist[i][k] != Integer.MAX_VALUE && dist[k][j] != Integer.MAX_VALUE && dist[k][k] < 0) {
+                        dist[i][j] = Integer.MIN_VALUE;
                     }
                 }
             }

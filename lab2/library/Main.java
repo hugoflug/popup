@@ -1,19 +1,13 @@
-import java.util.Comparator;
-import java.util.Collections;
-import java.util.Vector;
-
 /**
- * Author: Fabian Schilling
+ * Author: Fabian Schilling & Hugo Sandelius
  */
+
+import java.util.*;
 
 public class Main {
 
-    public static IO io = new IO(System.in, System.out);
-    //public static IO io = new IO("/Users/fabianschilling/Downloads/shortestpath1-sample-data/shortestpath1.in");
-    //public static IO io = new IO("/Users/fabianschilling/Downloads/shortestpath2-sample-data/shortestpath2.in");
-    //public static IO io = new IO("/Users/fabianschilling/Downloads/shortestpath3-sample-data/shortestpath3.in");
-    //public static IO io = new IO("/Users/fabianschilling/Downloads/minspantree-sample-data/minspantree.in");
-    //public static IO io = new IO("/Users/fabianschilling/Downloads/allpairspath-sample-data/allpairspath.in");
+    //public static IO io = new IO(System.in, System.out);
+    public static IO io = new IO("/Users/fabianschilling/Downloads/shortestpath3-sample-data/shortestpath3.in");
 
     public static void shortestpath1() {
 
@@ -51,6 +45,7 @@ public class Main {
                     io.println("Impossible");
                 } else {
                     io.println(distance);
+                    //Library.printPathTo(nodes[query]);
                 }
 
             }
@@ -97,6 +92,7 @@ public class Main {
                     io.println("Impossible");
                 } else {
                     io.println(distance);
+                    //Library.printPathTo(nodes[query]);
                 }
 
             }
@@ -142,10 +138,11 @@ public class Main {
 
                 if (distance == Integer.MAX_VALUE) {
                     io.println("Impossible");
-                } else if (distance == -Integer.MIN_VALUE) {
+                } else if (distance == Integer.MIN_VALUE) {
                     io.println("-Infinity");
                 } else {
                     io.println(distance);
+                    //Library.printPathTo(nodes[query]);
                 }
 
             }
@@ -267,9 +264,9 @@ public class Main {
 
         //shortestpath1();
         //shortestpath2();
-        //shortestpath3();
-        //minspantree();
+        shortestpath3();
         //allpairspath();
+        //minspantree();
         io.close();
     }
 }

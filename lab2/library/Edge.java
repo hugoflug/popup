@@ -1,3 +1,6 @@
+/**
+ * Author: Fabian Schilling & Hugo Sandelius
+ */
 
 public class Edge {
 
