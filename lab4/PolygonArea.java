@@ -1,7 +1,14 @@
 import java.util.ArrayList;
 import java.util.List;
 
+/** Authors: Hugo Sandelius & Fabian Schilling */
+
 public class PolygonArea {
+
+    /* Returns the 'signed area' a of the polygon
+    *  where a = -area if the points are given in clockwise order
+    *  and a = area if the points are given in counter-clockwise order
+    * */
     public static long calculateArea(List<Point> polygon) {
         long area = 0;
 
@@ -12,32 +19,5 @@ public class PolygonArea {
         area += polygon.get(polygon.size() - 1).cross(polygon.get(0));
 
         return area;
-    }
-
-    public static void main(String[] args) {
-        Kattio io = new Kattio(System.in, System.out);
-        while (true) {
-            int n = io.getInt();
-
-            if (n == 0) {
-                break;
-            }
-
-            List<Point> points = new ArrayList<>();
-            for (int i = 0; i < n; i++) {
-                points.add(new Point(io.getInt(), io.getInt()));
-            }
-
-            long area = calculateArea(points);
-            if (area < 0) {
-                io.print("CW");
-            } else {
-                io.print("CCW");
-            }
-
-            io.println(" " + String.format("%.1f", Math.abs(area)/2.0));
-        }
-
-        io.close();
     }
 }

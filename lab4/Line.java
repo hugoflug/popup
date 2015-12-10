@@ -1,14 +1,17 @@
+/** Authors: Hugo Sandelius & Fabian Schilling */
+
+/* Represent a two-dimensional line segment */
 public class Line {
 
     public Point a;
     public Point b;
 
+    /* Create a line segment from a to b */
     public Line(Point a, Point b) {
         this.a = a;
         this.b = b;
     }
 
-    /* TESTED AND WORKS*/
     public double distanceToLineSegment(Line l) {
 
         // Line segments ab and cd
@@ -40,7 +43,6 @@ public class Line {
         return min;
     }
 
-    /* TESTED AND WORKS */
     public boolean doesIntersect(Line l) {
 
         // Line segments ab and cd
@@ -69,7 +71,6 @@ public class Line {
         return 0.0 <= y && y <= 1.0 && 0.0 <= z && z <= 1.0;
     }
 
-    /* TESTED AND WORKS */
     public double distanceToPoint(Point p) {
 
         // Line segment ab

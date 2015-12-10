@@ -8,6 +8,7 @@ public class Library {
 
     // shortestpath1
     public static void dijkstra(Node start) {
+        /*
         start.distance = 0;
 
         Comparator<Node> comp = (o1, o2) -> Integer.compare(o1.distance, o2.distance);
@@ -34,11 +35,12 @@ public class Library {
                 }
             }
         }
+        */
     }
 
     // shortestpath2
     public static void dijkstraTimetable(Node start) {
-
+    /*
         start.distance = 0;
 
         Comparator<Node> comp = (o1, o2) -> Integer.compare(o1.distance, o2.distance);
@@ -71,6 +73,7 @@ public class Library {
                 }
             }
         }
+        */
     }
 
     // shortestpath3
@@ -87,14 +90,29 @@ public class Library {
             }
         }
 
+
+        int j = 0;
         for (Node node: nodes) {
+            System.out.println("iteration: " + j);
+
+            Edge e1 = edges[0];
+            System.out.println(e1.source.index + ": " + e1.source.distance + ", " + e1.target.index + ": " + e1.target.distance);
+
+            int i = 0;
             for (Edge e: edges) {
+                System.out.println(i + "= " + e.source.index + ": " + e.source.distance + ", " + e.target.index + ": " + e.target.distance);
                 if (e.source.distance == Integer.MIN_VALUE) {
+                    System.out.println("changing: " + e.target.index + " to -Infinity (1)");
                     e.target.distance = Integer.MIN_VALUE;
                 } else if (e.source.distance != Integer.MAX_VALUE && e.source.distance + e.weight < e.target.distance) {
                     e.target.distance = Integer.MIN_VALUE;
+                    System.out.println("changing: " + e.target.index + " to -Infinity (2)");
                 }
+
+                i++;
             }
+
+            j++;
         }
     }
 
@@ -120,6 +138,7 @@ public class Library {
 
     // minspantree
     public static void prim(Node[] nodes) {
+        /*
 
         // Order nodes by distance
         Comparator<Node> comp = (o1, o2) -> Integer.compare(o1.distance, o2.distance);
@@ -149,6 +168,7 @@ public class Library {
                 }
             }
         }
+        */
     }
 
     // allpairspath

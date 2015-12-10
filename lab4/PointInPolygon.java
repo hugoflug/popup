@@ -1,12 +1,15 @@
 import java.util.ArrayList;
 import java.util.List;
 
+/** Authors: Hugo Sandelius & Fabian Schilling */
+
 public class PointInPolygon {
-    public static int testPoint(Point p, List<Point> polygon) {
+
+    /* Returns -1 if point is not in polygon, 1 if point is on polygon edge, 0 if point not in polygon */
+    public static int isInPolygon(Point p, List<Point> polygon) {
         for (int i = 0; i < polygon.size(); i++) {
             Line l = new Line(polygon.get(i), polygon.get((i+1) % polygon.size()));
-            if (l.distanceToPoint(p) == 0) { /* dangerous! */
-                //System.err.println("on");
+            if (l.distanceToPoint(p) == 0) {
                 return 0;
             }
         }
@@ -18,9 +21,6 @@ public class PointInPolygon {
             angleSum += Math.atan2(p0.cross(p1), p0.dot(p1));
         }
 
-
-        //System.err.println(angleSum);
-
         final double THRESHOLD = 0.0001;
         if (Math.abs(angleSum) > Math.PI*2 - THRESHOLD && Math.abs(angleSum) < Math.PI*2 + THRESHOLD) { /* dangerous! */
             return 1;
@@ -29,35 +29,4 @@ public class PointInPolygon {
         return -1;
     }
 
-    public static void main(String[] args) {
-        Kattio io = new Kattio(System.in, System.out);
-        while (true) {
-            int n = io.getInt();
-
-            if (n == 0) {
-                break;
-            }
-
-            List<Point> polygon = new ArrayList<>();
-            for (int i = 0; i < n; i++) {
-                polygon.add(new Point(io.getInt(), io.getInt()));
-            }
-
-            int m = io.getInt();
-            for (int i = 0; i < m; i++) {
-                Point p = new Point(io.getInt(), io.getInt());
-                int res = testPoint(p, polygon);
-                if (res == -1) {
-                    io.println("out");
-                } else if (res == 0) {
-                    io.println("on");
-                } else if (res == 1) {
-                    io.println("in");
-                }
-            }
-
-        }
-
-        io.close();
-    }
 }

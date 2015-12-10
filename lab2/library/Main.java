@@ -6,8 +6,8 @@ import java.util.*;
 
 public class Main {
 
-    //public static IO io = new IO(System.in, System.out);
-    public static IO io = new IO("/Users/fabianschilling/Downloads/shortestpath3-sample-data/shortestpath3.in");
+    public static IO io = new IO(System.in, System.out);
+    //public static IO io = new IO("/Users/fabianschilling/Downloads/shortestpath3-sample-data/shortestpath3.in");
 
     public static void shortestpath1() {
 
@@ -133,6 +133,8 @@ public class Main {
 
             for (int i = 0; i < q; i++) {
                 int query = io.getInt();
+
+                System.out.println("query: " + query);
 
                 int distance = nodes[query].distance;
 

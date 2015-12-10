@@ -1,5 +1,8 @@
 import java.util.ArrayList;
 
+/** Authors: Hugo Sandelius & Fabian Schilling */
+
+/* Represents a two-dimensional point */
 public class Point implements Comparable<Point>{
 
     public static Point ZERO = new Point(0, 0);

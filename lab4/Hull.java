@@ -1,12 +1,15 @@
 import java.util.Arrays;
 
+/** Authors: Hugo Sandelius & Fabian Schilling */
+
 public class Hull {
 
-    public double cross(Point o, Point a, Point b) {
+    private static double cross(Point o, Point a, Point b) {
         return (a.x - o.x) * (b.y - o.y) - (a.y - o.y) * (b.x - o.x);
     }
 
-    public Point[] convexHull(Point[] ps) {
+    /* Returns the convex hull of the point set ps */
+    public static Point[] convexHull(Point[] ps) {
 
         if (ps.length > 1) {
             int n = ps.length, k = 0;

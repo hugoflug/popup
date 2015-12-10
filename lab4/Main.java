@@ -1,11 +1,10 @@
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
 public class Main {
 
     public static IO io = new IO(System.in, System.out);
-    //public static IO io = new IO("/Users/fabianschilling/Downloads/samples/segmentdistance_sample.in");
-    //public static IO io = new IO("/Users/fabianschilling/Downloads/samples/convexhull_sample.in");
 
     public static void main(String[] args) {
 
@@ -27,7 +26,7 @@ public class Main {
                 points[i] = new Point(io.getDouble(), io.getDouble());
             }
 
-            Point[] hull = new Hull().convexHull(points);
+            Point[] hull = Hull.convexHull(points);
 
             // Remove collinear edges
             ArrayList<Point> finalHull = new ArrayList<>();
@@ -64,6 +63,65 @@ public class Main {
             Line l2 = new Line(c, d);
 
             io.println(String.format("%.2f", l1.distanceToLineSegment(l2)));
+        }
+
+        io.close();
+    }
+
+    public static void pointInPolygon() {
+        Kattio io = new Kattio(System.in, System.out);
+        while (true) {
+            int n = io.getInt();
+
+            if (n == 0) {
+                break;
+            }
+
+            List<Point> polygon = new ArrayList<>();
+            for (int i = 0; i < n; i++) {
+                polygon.add(new Point(io.getInt(), io.getInt()));
+            }
+
+            int m = io.getInt();
+            for (int i = 0; i < m; i++) {
+                Point p = new Point(io.getInt(), io.getInt());
+                int res = PointInPolygon.isInPolygon(p, polygon);
+                if (res == -1) {
+                    io.println("out");
+                } else if (res == 0) {
+                    io.println("on");
+                } else if (res == 1) {
+                    io.println("in");
+                }
+            }
+
+        }
+
+        io.close();
+    }
+
+    public static void polygonArea() {
+        Kattio io = new Kattio(System.in, System.out);
+        while (true) {
+            int n = io.getInt();
+
+            if (n == 0) {
+                break;
+            }
+
+            List<Point> points = new ArrayList<>();
+            for (int i = 0; i < n; i++) {
+                points.add(new Point(io.getInt(), io.getInt()));
+            }
+
+            long area = PolygonArea.calculateArea(points);
+            if (area < 0) {
+                io.print("CW");
+            } else {
+                io.print("CCW");
+            }
+
+            io.println(" " + String.format("%.1f", Math.abs(area)/2.0));
         }
 
         io.close();
