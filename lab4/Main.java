@@ -1,11 +1,53 @@
+import java.util.ArrayList;
+import java.util.LinkedList;
+
 public class Main {
 
     public static IO io = new IO(System.in, System.out);
     //public static IO io = new IO("/Users/fabianschilling/Downloads/samples/segmentdistance_sample.in");
+    //public static IO io = new IO("/Users/fabianschilling/Downloads/samples/convexhull_sample.in");
 
     public static void main(String[] args) {
 
-        segmentDistance();
+        convexHull();
+        //segmentDistance();
+
+    }
+
+    public static void convexHull() {
+
+        while (io.hasMoreTokens()) {
+
+            int n = io.getInt();
+            if (n == 0) break;
+
+            Point[] points = new Point[n];
+
+            for (int i = 0; i < n; i++) {
+                points[i] = new Point(io.getDouble(), io.getDouble());
+            }
+
+            Point[] hull = new Hull().convexHull(points);
+
+            // Remove collinear edges
+            ArrayList<Point> finalHull = new ArrayList<>();
+            for (int i = 0; i < hull.length - 1; i++) {
+                if (hull[i].subtract(hull[i + 1]).equals(Point.ZERO)) {
+                    continue;
+                }
+                finalHull.add(hull[i]);
+            }
+            finalHull.add(hull[hull.length - 1]);
+
+            io.println(finalHull.size());
+
+            for (Point p: finalHull) {
+                io.println(p);
+            }
+
+        }
+
+        io.close();
     }
 
     public static void segmentDistance() {
