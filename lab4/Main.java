@@ -69,7 +69,7 @@ public class Main {
     }
 
     public static void pointInPolygon() {
-        Kattio io = new Kattio(System.in, System.out);
+        IO io = new IO(System.in, System.out);
         while (true) {
             int n = io.getInt();
 
@@ -101,7 +101,7 @@ public class Main {
     }
 
     public static void polygonArea() {
-        Kattio io = new Kattio(System.in, System.out);
+        IO io = new IO(System.in, System.out);
         while (true) {
             int n = io.getInt();
 
