@@ -12,11 +12,9 @@ public class PolygonArea {
     public static long calculateArea(List<Point> polygon) {
         long area = 0;
 
-        for (int i = 0; i < polygon.size() - 1; i++) {
-            area += polygon.get(i).cross(polygon.get(i+1));
+        for (int i = 0; i < polygon.size(); i++) {
+            area += polygon.get(i).cross(polygon.get((i+1) % polygon.size()));
         }
-
-        area += polygon.get(polygon.size() - 1).cross(polygon.get(0));
 
         return area;
     }

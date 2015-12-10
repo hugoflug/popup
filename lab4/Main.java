@@ -2,14 +2,17 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+/** Authors: Hugo Sandelius & Fabian Schilling*/
+
 public class Main {
 
     public static IO io = new IO(System.in, System.out);
 
     public static void main(String[] args) {
-
-        convexHull();
+        //convexHull();
         //segmentDistance();
+        //pointInPolygon();
+        polygonArea();
 
     }
 
@@ -69,7 +72,6 @@ public class Main {
     }
 
     public static void pointInPolygon() {
-        IO io = new IO(System.in, System.out);
         while (true) {
             int n = io.getInt();
 
@@ -101,7 +103,6 @@ public class Main {
     }
 
     public static void polygonArea() {
-        IO io = new IO(System.in, System.out);
         while (true) {
             int n = io.getInt();
 

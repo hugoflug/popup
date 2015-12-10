@@ -7,6 +7,8 @@ public class PointInPolygon {
 
     /* Returns -1 if point is not in polygon, 1 if point is on polygon edge, 0 if point not in polygon */
     public static int isInPolygon(Point p, List<Point> polygon) {
+
+        /* check if point is on polygon edge */
         for (int i = 0; i < polygon.size(); i++) {
             Line l = new Line(polygon.get(i), polygon.get((i+1) % polygon.size()));
             if (l.distanceToPoint(p) == 0) {
@@ -22,7 +24,7 @@ public class PointInPolygon {
         }
 
         final double THRESHOLD = 0.0001;
-        if (Math.abs(angleSum) > Math.PI*2 - THRESHOLD && Math.abs(angleSum) < Math.PI*2 + THRESHOLD) { /* dangerous! */
+        if (Math.abs(angleSum) > Math.PI*2 - THRESHOLD && Math.abs(angleSum) < Math.PI*2 + THRESHOLD) {
             return 1;
         }
 
